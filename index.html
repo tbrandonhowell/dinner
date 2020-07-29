@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="allMeals">
+            
+        </div>
+        
+        <script src="" async defer></script>
+        <script>
+            // create the array of meals
+            let dinArray = [
+                {
+                    meal:"meal 0",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 1",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 2",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 3",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 4",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 5",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 6",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 7",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 8",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 9",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 10",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 11",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                },
+                {
+                    meal:"meal 12",
+                    ingredients:[
+                        "meal ingredient 1",
+                        "meal ingredient 2",
+                        "meal ingredient 3"
+                    ]
+                }
+            ];
+            // Print the full list to the page
+            dinArray.forEach(element => {
+                var ingredientList = document.createElement("ul");
+                element.ingredients.forEach(element => {
+                    var newLi = document.createElement("li");
+                    newLi.innerText = element;
+                    ingredientList.appendChild(newLi);
+                })
+                var newDiv = document.createElement("div");
+                newDiv.innerHTML = '<div class="singleMeal"><p>' + element.meal + '</p></div>';
+                newDiv.appendChild(ingredientList);
+                document.getElementById("allMeals").appendChild(newDiv);
+            })
+            // Do the random selection
+            // TODO: right now I'm making the random Meals array as long as the full dinArray length. Is that necessary?
+            // TODO: currently no logic to prevent the same random meal from being in the randomMeals array multiple times.
+            let randomMeals = []; // stuff the random selections in here
+            let maxRandom = dinArray.length;
+            for (x=0; x < maxRandom; x++){
+                var ranNum = Math.floor((Math.random() * maxRandom) + 0);
+                randomMeals.push(ranNum);
+            }
+            console.log(randomMeals);
+
+            // envisioning a situation where we print out the seven (5? 6?) meals to the screen, and each meal has an [x].
+            // if you press this [x], then you erase that meal from the screen, and put another meal at the end of the visible list
+            // if you do one full sort of the dinner array ahead of time, you should need to do any more sorting or logic.
+            // just keep working your way through the random list every time an [x] is hit
+
+        </script>
+    </body>
+</html>
