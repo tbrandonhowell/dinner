@@ -10,14 +10,50 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <style>
+            .button {
+                background-color: red;
+            }
+            #allMeals, #randomMeals, #essentials {
+                display: none;
+            }
+        </style>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <div id="pickLayout">
+            <div class="button" id="buttonShowAllMeals">
+                <p>All Meals</p>
+            </div>
+            <div class="button" id="buttonRandomMeals">
+                <p>Random Meals</p>
+            </div>
+            <div class="button" id="buttonEssentials">
+                <p>Essentials</p>
+            </div>
+        </div>
+
         <div id="allMeals">
             
+        </div>
+
+        <div id="randomMeals">
+
+        </div>
+
+        <div id="essentials">
+            <ul>
+                <li>Sandwich Bread</li>
+                <li>Regular Milk</li>
+                <li>Lactose Free Milk</li>
+                <li>Eggs</li>
+                <li>Vegetable Oil</li>
+                <li>Olive Oil</li>
+                <li>Sliced Cheese</li>
+            </ul>
         </div>
         
         <script src="" async defer></script>
@@ -27,9 +63,9 @@
                 {
                     meal:"meal 0",
                     ingredients:[
-                        "meal ingredient 1",
-                        "meal ingredient 2",
-                        "meal ingredient 3"
+                        "meal 0 ingredient 1",
+                        "meal 0 ingredient 2",
+                        "meal 0 ingredient 3"
                     ]
                 },
                 {
@@ -51,9 +87,9 @@
                 {
                     meal:"meal 3",
                     ingredients:[
-                        "meal ingredient 1",
-                        "meal ingredient 2",
-                        "meal ingredient 3"
+                        "meal 3 ingredient 1",
+                        "meal 3 ingredient 2",
+                        "meal 3 ingredient 3"
                     ]
                 },
                 {
@@ -129,34 +165,134 @@
                     ]
                 }
             ];
-            // Print the full list to the page
-            dinArray.forEach(element => {
+            // Print the full list to the page (always runs)
+            // TODO: finish applying a unique ID of some sort to each meal/ingredient list so can show/hide individually
+            for (x=0;x<dinArray.length;x++) {
                 var ingredientList = document.createElement("ul");
-                element.ingredients.forEach(element => {
+                ingredientList.style.display = "none";
+                ingredientList.setAttribute("id","list_a"+x);
+                dinArray[x].ingredients.forEach(element => {
                     var newLi = document.createElement("li");
                     newLi.innerText = element;
                     ingredientList.appendChild(newLi);
                 })
                 var newDiv = document.createElement("div");
-                newDiv.innerHTML = '<div class="singleMeal"><p>' + element.meal + '</p></div>';
+                newDiv.setAttribute("class","singleMeal");
+                newDiv.setAttribute("recipe","a"+x);
+                newDiv.innerHTML = '<p>' + dinArray[x].meal + '</p>'
+                // newDiv.innerHTML = '<div class="singleMeal" recipe="a' + x + '"><p>' + dinArray[x].meal + '</p></div>';
                 newDiv.appendChild(ingredientList);
                 document.getElementById("allMeals").appendChild(newDiv);
-            })
-            // Do the random selection
-            // TODO: right now I'm making the random Meals array as long as the full dinArray length. Is that necessary?
-            // TODO: currently no logic to prevent the same random meal from being in the randomMeals array multiple times.
-            let randomMeals = []; // stuff the random selections in here
-            let maxRandom = dinArray.length;
-            for (x=0; x < maxRandom; x++){
-                var ranNum = Math.floor((Math.random() * maxRandom) + 0);
-                randomMeals.push(ranNum);
             }
+            // Do the random selection
+            // TODO: right now I'm making the random Meals array as long as the full dinArray length. Is that necessary? << YES
+            // TODO: currently no logic to prevent the same random meal from being in the randomMeals array multiple times.
+            // let randomMeals = []; // stuff the random selections in here
+            // let maxRandom = dinArray.length;
+            // for (x=0; x < maxRandom; x++){
+            //     var ranNum = Math.floor((Math.random() * maxRandom) + 0);
+            //     randomMeals.push(ranNum);
+            // }
+            // console.log(randomMeals);
+
+            var randomMeals = shuffle(dinArray);
+            console.log("randomMeals");
             console.log(randomMeals);
+
+            for (x=0;x<randomMeals.length;x++) {
+                var ingredientList = document.createElement("ul");
+                ingredientList.style.display = "none";
+                ingredientList.setAttribute("id","list_r"+x);
+                dinArray[x].ingredients.forEach(element => {
+                    var newLi = document.createElement("li");
+                    newLi.innerText = element;
+                    ingredientList.appendChild(newLi);
+                })
+                var newDiv = document.createElement("div");
+                newDiv.setAttribute("class","singleMeal");
+                newDiv.setAttribute("recipe","r"+x);
+                newDiv.innerHTML = '<p>' + dinArray[x].meal + '</p>'
+                // newDiv.innerHTML = '<div class="singleMeal" recipe="a' + x + '"><p>' + dinArray[x].meal + '</p></div>';
+                newDiv.appendChild(ingredientList);
+                if (x > 6) {
+                    newDiv.style.display = "none";
+                }
+                document.getElementById("randomMeals").appendChild(newDiv);
+            }
+            
 
             // envisioning a situation where we print out the seven (5? 6?) meals to the screen, and each meal has an [x].
             // if you press this [x], then you erase that meal from the screen, and put another meal at the end of the visible list
             // if you do one full sort of the dinner array ahead of time, you should need to do any more sorting or logic.
             // just keep working your way through the random list every time an [x] is hit
+
+            // Array Shuffle Function
+            function shuffle(array) { // from https://bost.ocks.org/mike/shuffle/
+                var m = array.length, t, i;
+
+                // While there remain elements to shuffle…
+                while (m) {
+
+                    // Pick a remaining element…
+                    i = Math.floor(Math.random() * m--);
+
+                    // And swap it with the current element.
+                    t = array[m];
+                    array[m] = array[i];
+                    array[i] = t;
+                }
+
+                return array;
+            }
+
+            // OnClick - Show Full List, Hide Others
+            function showAllMeals(){
+                document.getElementById("randomMeals").style.display = "none";
+                document.getElementById("allMeals").style.display = "block";
+                document.getElementById("essentials").style.display = "none";
+                console.log("showAllMeals() firing");
+            }
+
+            // OnClick - Show Random List, Hide Others
+            function showRandomMeals(){
+                document.getElementById("randomMeals").style.display = "block";
+                document.getElementById("allMeals").style.display = "none";
+                document.getElementById("essentials").style.display = "none";
+                console.log("showRandomMeals() firing");
+            }
+
+            // OnClick - Show Essentials, Hide Others
+            function showEssentials(){
+                document.getElementById("randomMeals").style.display = "none";
+                document.getElementById("allMeals").style.display = "none";
+                document.getElementById("essentials").style.display = "block";
+                console.log("showEssentials() firing");
+            }
+
+            // OnClick - show ingredient list for a meal
+            function toggleIngredients(){
+                console.log("toggleIngredients");
+                console.log(this.getAttribute("recipe"))
+                var recipe = this.getAttribute("recipe");
+                // console.log("current display state of list: " + )
+                if (document.getElementById("list_"+recipe).style.display === "none") {
+                    document.getElementById("list_"+recipe).style.display = "block";
+                } else if (document.getElementById("list_"+recipe).style.display === "block") {
+                    document.getElementById("list_"+recipe).style.display = "none";
+                } else {
+                    document.getElementById("list_"+recipe).style.display = "block";
+                }
+            }
+
+            // Click Listeners: main buttons
+            document.getElementById("buttonRandomMeals").onclick = function(){showRandomMeals()};
+            document.getElementById("buttonShowAllMeals").onclick = function(){showAllMeals()};
+            document.getElementById("buttonEssentials").onclick = function(){showEssentials()};
+            // Click Listeners: expanding meals to show ingredients
+            var singleMealButtons = document.getElementsByClassName("singleMeal");
+            for (var x=0; x < singleMealButtons.length; x++) {
+                singleMealButtons[x].addEventListener('click',toggleIngredients);
+            }
 
         </script>
     </body>
