@@ -37,14 +37,16 @@
         </div>
 
         <div id="allMeals">
+            <h1>All Meals</h1>
             
         </div>
 
         <div id="randomMeals">
-
+            <h1>Random Meals</h1>
         </div>
 
         <div id="essentials">
+            <h1>Essentials</h1>
             <ul>
                 <li>Sandwich Bread</li>
                 <li>Regular Milk</li>
@@ -64,116 +66,127 @@
 
                 console.log(rawJson);
 
+                let dinArray = [];
+
                 // create meal array from API data
-                
+                for(x=0;x<rawJson.length;x++) {
+                    newMealObject = {}
+                    newMealObject.meal = rawJson[x].content.$t.split(";")[0];
+                    newMealObject.ingredients = rawJson[x].content.$t.split(";")[1].split(",")
+                    // console.log(newMealObject)
+                    dinArray.push(newMealObject);
+                }
+
+                console.log(dinArray);
 
                 // create the array of meals
-                let dinArray = [
-                    {
-                        meal:"meal 0",
-                        ingredients:[
-                            "meal 0 ingredient 1",
-                            "meal 0 ingredient 2",
-                            "meal 0 ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 1",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 2",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 3",
-                        ingredients:[
-                            "meal 3 ingredient 1",
-                            "meal 3 ingredient 2",
-                            "meal 3 ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 4",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 5",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 6",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 7",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 8",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 9",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 10",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 11",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    },
-                    {
-                        meal:"meal 12",
-                        ingredients:[
-                            "meal ingredient 1",
-                            "meal ingredient 2",
-                            "meal ingredient 3"
-                        ]
-                    }
-                ];
+                // let dinArray = [
+                // let oldDinArray = [
+                //     {
+                //         meal:"meal 0",
+                //         ingredients:[
+                //             "meal 0 ingredient 1",
+                //             "meal 0 ingredient 2",
+                //             "meal 0 ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 1",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 2",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 3",
+                //         ingredients:[
+                //             "meal 3 ingredient 1",
+                //             "meal 3 ingredient 2",
+                //             "meal 3 ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 4",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 5",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 6",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 7",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 8",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 9",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 10",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 11",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     },
+                //     {
+                //         meal:"meal 12",
+                //         ingredients:[
+                //             "meal ingredient 1",
+                //             "meal ingredient 2",
+                //             "meal ingredient 3"
+                //         ]
+                //     }
+                // ];
                 // Print the full list to the page (always runs)
                 // TODO: finish applying a unique ID of some sort to each meal/ingredient list so can show/hide individually
                 for (x=0;x<dinArray.length;x++) {
