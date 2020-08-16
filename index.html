@@ -61,6 +61,8 @@
         <script src="" async defer></script>
         <script>
 
+            // FUNCTION: runAfterApiCall()
+
             // the majority of the script needs to run after the API call ends so we can have all the data for the meal array
             function runAfterApiCall() {
 
@@ -79,175 +81,71 @@
 
                 console.log(dinArray);
 
-                // create the array of meals
-                // let dinArray = [
-                // let oldDinArray = [
-                //     {
-                //         meal:"meal 0",
-                //         ingredients:[
-                //             "meal 0 ingredient 1",
-                //             "meal 0 ingredient 2",
-                //             "meal 0 ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 1",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 2",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 3",
-                //         ingredients:[
-                //             "meal 3 ingredient 1",
-                //             "meal 3 ingredient 2",
-                //             "meal 3 ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 4",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 5",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 6",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 7",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 8",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 9",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 10",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 11",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     },
-                //     {
-                //         meal:"meal 12",
-                //         ingredients:[
-                //             "meal ingredient 1",
-                //             "meal ingredient 2",
-                //             "meal ingredient 3"
-                //         ]
-                //     }
-                // ];
                 // Print the full list to the page (always runs)
-                // TODO: finish applying a unique ID of some sort to each meal/ingredient list so can show/hide individually
                 for (x=0;x<dinArray.length;x++) {
+                    // create a UL w/ ingredients
                     var ingredientList = document.createElement("ul");
-                    ingredientList.style.display = "none";
+                    // ingredientList.style.display = "none";
                     ingredientList.setAttribute("id","list_a"+x);
                     dinArray[x].ingredients.forEach(element => {
                         var newLi = document.createElement("li");
                         newLi.innerText = element;
                         ingredientList.appendChild(newLi);
                     })
+                    // create an internal container div for the ingredient list
+                    var hiddenDiv = document.createElement("div");
+                    hiddenDiv.setAttribute("class","mealInfo");
+                    hiddenDiv.setAttribute("recipe","a"+x);
+                    hiddenDiv.setAttribute("id","mealInfo_a"+x)
+                    hiddenDiv.setAttribute("style","display:none");
+                    // populate the hiddenDiv w/ the ingredientList
+                    hiddenDiv.appendChild(ingredientList);
+                    // create the external container div for the meal
                     var newDiv = document.createElement("div");
                     newDiv.setAttribute("class","singleMeal");
                     newDiv.setAttribute("recipe","a"+x);
-                    newDiv.innerHTML = '<p>' + dinArray[x].meal + '</p>'
-                    // newDiv.innerHTML = '<div class="singleMeal" recipe="a' + x + '"><p>' + dinArray[x].meal + '</p></div>';
-                    newDiv.appendChild(ingredientList);
+                    newDiv.innerHTML = '<p class="mealName" recipe="a' + x + '">' + dinArray[x].meal + '</p>'
+                    newDiv.appendChild(hiddenDiv);
                     document.getElementById("allMeals").appendChild(newDiv);
                 }
-                // Do the random selection
-                // TODO: right now I'm making the random Meals array as long as the full dinArray length. Is that necessary? << YES
-                // TODO: currently no logic to prevent the same random meal from being in the randomMeals array multiple times.
-                // let randomMeals = []; // stuff the random selections in here
-                // let maxRandom = dinArray.length;
-                // for (x=0; x < maxRandom; x++){
-                //     var ranNum = Math.floor((Math.random() * maxRandom) + 0);
-                //     randomMeals.push(ranNum);
-                // }
-                // console.log(randomMeals);
 
+                // Create an array of random meals
                 var randomMeals = shuffle(dinArray);
                 // console.log("randomMeals");
                 // console.log(randomMeals);
 
+                // Print the list of random meals to the page
                 for (x=0;x<randomMeals.length;x++) {
+                    // create a UL w/ ingredients
                     var ingredientList = document.createElement("ul");
-                    ingredientList.style.display = "none";
+                    // ingredientList.style.display = "none";
                     ingredientList.setAttribute("id","list_r"+x);
                     dinArray[x].ingredients.forEach(element => {
                         var newLi = document.createElement("li");
                         newLi.innerText = element;
                         ingredientList.appendChild(newLi);
                     })
+                    // create an internal container div for the ingredient list
+                    var hiddenDiv = document.createElement("div");
+                    hiddenDiv.setAttribute("class","mealInfo");
+                    hiddenDiv.setAttribute("recipe","r"+x);
+                    hiddenDiv.setAttribute("id","mealInfo_r"+x)
+                    hiddenDiv.setAttribute("style","display:none");
+                    // populate the hiddenDiv w/ the ingredientList
+                    hiddenDiv.appendChild(ingredientList);
+                    hiddenDiv.innerHTML += '<p class="deleteButton" recipe="r' + x + '" id="delete_r' + x + '"><a>Delete ' + dinArray[x].meal + ' from meals list</a>'
+                    // create the external container div for the meal
                     var newDiv = document.createElement("div");
                     newDiv.setAttribute("class","singleMeal");
                     newDiv.setAttribute("recipe","r"+x);
-                    newDiv.innerHTML = '<p>' + dinArray[x].meal + '</p>'
-                    // newDiv.innerHTML = '<div class="singleMeal" recipe="a' + x + '"><p>' + dinArray[x].meal + '</p></div>';
-                    newDiv.appendChild(ingredientList);
+                    newDiv.innerHTML = '<p class="mealName" recipe="r' + x + '">' + dinArray[x].meal + '</p>'
+                    newDiv.appendChild(hiddenDiv);
                     if (x > 6) {
                         newDiv.style.display = "none";
                     }
                     document.getElementById("randomMeals").appendChild(newDiv);
                 }
                 
-
-                // envisioning a situation where we print out the seven (5? 6?) meals to the screen, and each meal has an [x].
-                // if you press this [x], then you erase that meal from the screen, and put another meal at the end of the visible list
-                // if you do one full sort of the dinner array ahead of time, you should need to do any more sorting or logic.
-                // just keep working your way through the random list every time an [x] is hit
-
                 // Array Shuffle Function
                 function shuffle(array) { // from https://bost.ocks.org/mike/shuffle/
                     var m = array.length, t, i;
@@ -275,7 +173,7 @@
                     console.log("showAllMeals() firing");
                 }
 
-                // OnClick - Show Random List, Hide Others
+                // OnClick Function - Show Random List, Hide Others
                 function showRandomMeals(){
                     document.getElementById("randomMeals").style.display = "block";
                     document.getElementById("allMeals").style.display = "none";
@@ -283,7 +181,7 @@
                     console.log("showRandomMeals() firing");
                 }
 
-                // OnClick - Show Essentials, Hide Others
+                // OnClick Function - Show Essentials, Hide Others
                 function showEssentials(){
                     document.getElementById("randomMeals").style.display = "none";
                     document.getElementById("allMeals").style.display = "none";
@@ -291,19 +189,30 @@
                     console.log("showEssentials() firing");
                 }
 
-                // OnClick - show ingredient list for a meal
+                // OnClick Function - show ingredient list for a meal
                 function toggleIngredients(){
                     console.log("toggleIngredients");
                     console.log(this.getAttribute("recipe"))
                     var recipe = this.getAttribute("recipe");
                     // console.log("current display state of list: " + )
-                    if (document.getElementById("list_"+recipe).style.display === "none") {
-                        document.getElementById("list_"+recipe).style.display = "block";
-                    } else if (document.getElementById("list_"+recipe).style.display === "block") {
-                        document.getElementById("list_"+recipe).style.display = "none";
+                    if (document.getElementById("mealInfo_"+recipe).style.display === "none") {
+                        document.getElementById("mealInfo_"+recipe).style.display = "block";
+                    } else if (document.getElementById("mealInfo_"+recipe).style.display === "block") {
+                        document.getElementById("mealInfo_"+recipe).style.display = "none";
                     } else {
-                        document.getElementById("list_"+recipe).style.display = "block";
+                        document.getElementById("mealInfo_"+recipe).style.display = "block";
                     }
+                }
+
+                // OnClick Function - delete meal from random list
+                function deleteMeal(){
+                    console.log("deleteMeal() triggered")
+                    console.log(this.getAttribute("recipe"));
+                    // TODO: need to create two arrays for the random meals - one to hold the visible random meals, and another to hold the remaining random meals
+                    // TODO: then can print the 'visible' random meals
+                    // TODO: if the user deletes a meal, what will happen is that the deleted meal moves to the end of the 'remaining' array
+                    // TODO: then the first entry from the 'remaining' array will move to the end of the 'visible' array
+                    // TODO: this would make it easier to grab all the ingredients from the approved random meals and put them in a list later (if I even do this)
                 }
 
                 // Click Listeners: main buttons
@@ -311,9 +220,14 @@
                 document.getElementById("buttonShowAllMeals").onclick = function(){showAllMeals()};
                 document.getElementById("buttonEssentials").onclick = function(){showEssentials()};
                 // Click Listeners: expanding meals to show ingredients
-                var singleMealButtons = document.getElementsByClassName("singleMeal");
+                var singleMealButtons = document.getElementsByClassName("mealName");
                 for (var x=0; x < singleMealButtons.length; x++) {
                     singleMealButtons[x].addEventListener('click',toggleIngredients);
+                }
+                // Click Listeners: deleting random meals
+                var deleteButtons = document.getElementsByClassName("deleteButton");
+                for (var x=0; x < deleteButtons.length; x++) {
+                    deleteButtons[x].addEventListener('click',deleteMeal);
                 }
 
             } // close runAfterApiCall()
