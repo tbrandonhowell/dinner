@@ -61,6 +61,10 @@
         <script src="" async defer></script>
         <script>
 
+            // variables to house the split of visible and hidden random meals
+            var hiddenRandomMeals = [];
+            var visibleRandomMeals = [];
+
             // FUNCTION: runAfterApiCall()
 
             // the majority of the script needs to run after the API call ends so we can have all the data for the meal array
@@ -111,16 +115,24 @@
 
                 // Create an array of random meals
                 var randomMeals = shuffle(dinArray);
-                // console.log("randomMeals");
-                // console.log(randomMeals);
+                console.log("randomMeals");
+                console.log(randomMeals);
+
+                for(x=0;x<randomMeals.length;x++) {
+                    if(x<7) {
+                        visibleRandomMeals.push(randomMeals[x]);
+                    } else {
+                        hiddenRandomMeals.push(randomMeals[x]);
+                    }
+                }
 
                 // Print the list of random meals to the page
-                for (x=0;x<randomMeals.length;x++) {
+                for (x=0;x<visibleRandomMeals.length;x++) {
                     // create a UL w/ ingredients
                     var ingredientList = document.createElement("ul");
                     // ingredientList.style.display = "none";
                     ingredientList.setAttribute("id","list_r"+x);
-                    dinArray[x].ingredients.forEach(element => {
+                    randomMeals[x].ingredients.forEach(element => {
                         var newLi = document.createElement("li");
                         newLi.innerText = element;
                         ingredientList.appendChild(newLi);
@@ -208,11 +220,27 @@
                 function deleteMeal(){
                     console.log("deleteMeal() triggered")
                     console.log(this.getAttribute("recipe"));
-                    // TODO: need to create two arrays for the random meals - one to hold the visible random meals, and another to hold the remaining random meals
-                    // TODO: then can print the 'visible' random meals
-                    // TODO: if the user deletes a meal, what will happen is that the deleted meal moves to the end of the 'remaining' array
-                    // TODO: then the first entry from the 'remaining' array will move to the end of the 'visible' array
+                    var arrayNum = this.getAttribute("recipe").replace(/r/g,"");
+                    console.log("arrayNum = " + arrayNum)
+                    console.log("original hiddenRandomMeals");
+                    console.log(hiddenRandomMeals);
+                    console.log("original visibleRandomMeals");
+                    console.log(visibleRandomMeals);
+                    hiddenRandomMeals.push(visibleRandomMeals[arrayNum]);
+                    visibleRandomMeals.splice(arrayNum,1);
+                    visibleRandomMeals.push(hiddenRandomMeals[0]);
+                    hiddenRandomMeals.shift();
+                    console.log("updated hiddenRandomMeals");
+                    console.log(hiddenRandomMeals);
+                    console.log("updated visibleRandomMeals");
+                    console.log(visibleRandomMeals);
+                    // DONE need to create two arrays for the random meals - one to hold the visible random meals, and another to hold the remaining random meals
+                    // DONE then can print the 'visible' random meals
+                    // DONE if the user deletes a meal, what will happen is that the deleted meal moves to the end of the 'remaining' array
+                    // DONE then the first entry from the 'remaining' array will move to the end of the 'visible' array
                     // TODO: this would make it easier to grab all the ingredients from the approved random meals and put them in a list later (if I even do this)
+                    // TODO: need to delete the meal from the html DOM
+                    // TODO: then need to add the new meal to the html DOM
                 }
 
                 // Click Listeners: main buttons
