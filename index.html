@@ -126,38 +126,43 @@
                     }
                 }
 
-                // Print the list of random meals to the page
-                for (x=0;x<visibleRandomMeals.length;x++) {
-                    // create a UL w/ ingredients
-                    var ingredientList = document.createElement("ul");
-                    // ingredientList.style.display = "none";
-                    ingredientList.setAttribute("id","list_r"+x);
-                    randomMeals[x].ingredients.forEach(element => {
-                        var newLi = document.createElement("li");
-                        newLi.innerText = element;
-                        ingredientList.appendChild(newLi);
-                    })
-                    // create an internal container div for the ingredient list
-                    var hiddenDiv = document.createElement("div");
-                    hiddenDiv.setAttribute("class","mealInfo");
-                    hiddenDiv.setAttribute("recipe","r"+x);
-                    hiddenDiv.setAttribute("id","mealInfo_r"+x)
-                    hiddenDiv.setAttribute("style","display:none");
-                    // populate the hiddenDiv w/ the ingredientList
-                    hiddenDiv.appendChild(ingredientList);
-                    hiddenDiv.innerHTML += '<p class="deleteButton" recipe="r' + x + '" id="delete_r' + x + '"><a>Delete ' + dinArray[x].meal + ' from meals list</a>'
-                    // create the external container div for the meal
-                    var newDiv = document.createElement("div");
-                    newDiv.setAttribute("class","singleMeal");
-                    newDiv.setAttribute("recipe","r"+x);
-                    newDiv.innerHTML = '<p class="mealName" recipe="r' + x + '">' + dinArray[x].meal + '</p>'
-                    newDiv.appendChild(hiddenDiv);
-                    if (x > 6) {
-                        newDiv.style.display = "none";
+                // printVisibleRandomMeals() Function
+                function printVisibleRandomMeals() {
+                    for (x=0;x<visibleRandomMeals.length;x++) {
+                        // create a UL w/ ingredients
+                        var ingredientList = document.createElement("ul");
+                        // ingredientList.style.display = "none";
+                        ingredientList.setAttribute("id","list_r"+x);
+                        visibleRandomMeals[x].ingredients.forEach(element => {
+                            var newLi = document.createElement("li");
+                            newLi.innerText = element;
+                            ingredientList.appendChild(newLi);
+                        })
+                        // create an internal container div for the ingredient list
+                        var hiddenDiv = document.createElement("div");
+                        hiddenDiv.setAttribute("class","mealInfo");
+                        hiddenDiv.setAttribute("recipe","r"+x);
+                        hiddenDiv.setAttribute("id","mealInfo_r"+x)
+                        hiddenDiv.setAttribute("style","display:none");
+                        // populate the hiddenDiv w/ the ingredientList
+                        hiddenDiv.appendChild(ingredientList);
+                        hiddenDiv.innerHTML += '<p class="deleteButton" recipe="r' + x + '" id="delete_r' + x + '"><a>Delete ' + visibleRandomMeals[x].meal + ' from meals list</a>'
+                        // create the external container div for the meal
+                        var newDiv = document.createElement("div");
+                        newDiv.setAttribute("class","singleMeal");
+                        newDiv.setAttribute("recipe","r"+x);
+                        newDiv.innerHTML = '<p class="mealName" recipe="r' + x + '">' + visibleRandomMeals[x].meal + '</p>'
+                        newDiv.appendChild(hiddenDiv);
+                        // if (x > 6) {
+                        //     newDiv.style.display = "none";
+                        // }
+                        document.getElementById("randomMeals").appendChild(newDiv);
                     }
-                    document.getElementById("randomMeals").appendChild(newDiv);
                 }
-                
+
+                // Print the list of random meals to the page
+                printVisibleRandomMeals();
+
                 // Array Shuffle Function
                 function shuffle(array) { // from https://bost.ocks.org/mike/shuffle/
                     var m = array.length, t, i;
@@ -241,24 +246,34 @@
                     // TODO: this would make it easier to grab all the ingredients from the approved random meals and put them in a list later (if I even do this)
                     // TODO: need to delete the meal from the html DOM
                     // TODO: then need to add the new meal to the html DOM
+                    document.getElementById("randomMeals").innerHTML = "<h1>Random Meals Updated</h1>";
+                    printVisibleRandomMeals();
+                    applyListeners();
                 }
 
-                // Click Listeners: main buttons
-                document.getElementById("buttonRandomMeals").onclick = function(){showRandomMeals()};
-                document.getElementById("buttonShowAllMeals").onclick = function(){showAllMeals()};
-                document.getElementById("buttonEssentials").onclick = function(){showEssentials()};
-                // Click Listeners: expanding meals to show ingredients
-                var singleMealButtons = document.getElementsByClassName("mealName");
-                for (var x=0; x < singleMealButtons.length; x++) {
-                    singleMealButtons[x].addEventListener('click',toggleIngredients);
+                function applyListeners() {
+                    // Click Listeners: main buttons
+                    document.getElementById("buttonRandomMeals").onclick = function(){showRandomMeals()};
+                    document.getElementById("buttonShowAllMeals").onclick = function(){showAllMeals()};
+                    document.getElementById("buttonEssentials").onclick = function(){showEssentials()};
+                    // Click Listeners: expanding meals to show ingredients
+                    var singleMealButtons = document.getElementsByClassName("mealName");
+                    for (var x=0; x < singleMealButtons.length; x++) {
+                        singleMealButtons[x].addEventListener('click',toggleIngredients);
+                    }
+                    // Click Listeners: deleting random meals
+                    var deleteButtons = document.getElementsByClassName("deleteButton");
+                    for (var x=0; x < deleteButtons.length; x++) {
+                        deleteButtons[x].addEventListener('click',deleteMeal);
+                    }
                 }
-                // Click Listeners: deleting random meals
-                var deleteButtons = document.getElementsByClassName("deleteButton");
-                for (var x=0; x < deleteButtons.length; x++) {
-                    deleteButtons[x].addEventListener('click',deleteMeal);
-                }
+
+                applyListeners();
+                
 
             } // close runAfterApiCall()
+
+
 
             var rawJson; // use this for storing the output of the API call
 
